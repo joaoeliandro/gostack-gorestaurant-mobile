@@ -10,6 +10,25 @@ interface Product {
   thumbnail_url: string;
 }
 
+interface Extra {
+  id: number;
+  name: string;
+  value: number;
+  quantity: number;
+}
+
+interface Food {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  formattedValue: string;
+  totalOrderValue: string;
+  thumbnail_url: string;
+  extras: Extra[];
+  quantity: number;
+}
+
 export const Container = styled.View`
   flex: 1;
   background: #fff;
@@ -37,14 +56,14 @@ export const FoodsContainer = styled.View`
   margin-top: -60px;
 `;
 
-export const FoodList = styled(FlatList as new () => FlatList<Product>)`
+export const FoodList = styled(FlatList as new () => FlatList<Food>)`
   flex: 1;
   padding: 0 20px;
 
   margin-top: 16px;
 `;
 
-export const Food = styled.TouchableOpacity`
+export const Foods = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   align-items: center;

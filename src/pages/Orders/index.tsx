@@ -11,7 +11,7 @@ import {
   HeaderTitle,
   FoodsContainer,
   FoodList,
-  Food,
+  Foods,
   FoodImageContainer,
   FoodContent,
   FoodTitle,
@@ -24,8 +24,8 @@ interface Food {
   name: string;
   description: string;
   price: number;
-  formattedValue: number;
-  totalOrderValue: number;
+  formattedValue: string;
+  totalOrderValue: string;
   thumbnail_url: string;
   extras: Extra[];
   quantity: number;
@@ -40,13 +40,13 @@ interface Extra {
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Food[]>([]);
-  const isFocused = useIsFocused();
+  const isFocused = true;
 
   useEffect(() => {
     async function loadOrders(): Promise<void> {
       // Load orders from API
       api.get<Food[]>('orders').then(response => {
-        const formattedOrders = response.data.map(food => {
+        const formattedOrders: Food[] = response.data.map(food => {
           const totalExtras = food.extras.reduce((acm, curr) => {
             return acm + curr.quantity * curr.value;
           }, 0);
@@ -81,7 +81,7 @@ const Orders: React.FC = () => {
           data={orders}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
-            <Food key={item.id} activeOpacity={0.6}>
+            <Foods key={item.id} activeOpacity={0.6}>
               <FoodImageContainer>
                 <Image
                   style={{ width: 88, height: 88 }}
@@ -93,7 +93,7 @@ const Orders: React.FC = () => {
                 <FoodDescription>{item.description}</FoodDescription>
                 <FoodPricing>{item.totalOrderValue}</FoodPricing>
               </FoodContent>
-            </Food>
+            </Foods>
           )}
         />
       </FoodsContainer>
